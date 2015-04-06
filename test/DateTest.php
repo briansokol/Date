@@ -27,14 +27,14 @@ class DateTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals('2015-04-01T13:43:21-07:00', $this->date->getDate());
 	}
 
-	public function testSetDateFromString() {
-		$this->date->setDateFromString('2015-04-01 13:43:21');
+	public function testSetDateTimeFromString() {
+		$this->date->setDateTimeFromString('2015-04-01 13:43:21');
 		$this->assertEquals('2015-04-01T13:43:21-07:00', $this->date->getDate());
 	}
 
-	public function testSetDateFromStringWithTimezone() {
+	public function testSetDateTimeFromStringWithTimezone() {
 		$timezone = new \DateTimeZone('Pacific/Honolulu');
-		$this->date->setDateFromString('2015-04-01 13:43:21', $timezone);
+		$this->date->setDateTimeFromString('2015-04-01 13:43:21', $timezone);
 		$this->assertEquals('2015-04-01T13:43:21-10:00', $this->date->getDate());
 	}
 
@@ -45,31 +45,31 @@ class DateTest extends PHPUnit_Framework_TestCase {
 
 	public function testSetTimezone() {
 		$timezone = new \DateTimeZone('Pacific/Honolulu');
-		$this->date->setDateFromString('2015-04-01 13:43:21');
+		$this->date->setDateTimeFromString('2015-04-01 13:43:21');
 		$this->date->setTimezone($timezone);
 		$this->assertEquals('2015-04-01T10:43:21-10:00', $this->date->getDate());
 	}
 
 	public function testSetFormat() {
-		$this->date->setDateFromString('2015-04-01 13:43:21');
+		$this->date->setDateTimeFromString('2015-04-01 13:43:21');
 		$this->date->setFormat('Y-m-d H:i:s');
 		$this->assertEquals('2015-04-01 13:43:21', $this->date->getDate());
 	}
 
-	public function testGetFirstDayOfMonth() {
-		$this->date->setDateFromString('2015-04-15 13:43:21');
-		$this->assertEquals('2015-04-01T00:00:00-07:00', $this->date->getFirstDayOfMonth());
+	public function testGetStartOfMonth() {
+		$this->date->setDateTimeFromString('2015-04-15 13:43:21');
+		$this->assertEquals('2015-04-01T00:00:00-07:00', $this->date->getStartOfMonth());
 
-		$this->date->setDateFromString('2015-03-15 13:43:21');
-		$this->assertEquals('2015-03-01T00:00:00-07:00', $this->date->getFirstDayOfMonth());
+		$this->date->setDateTimeFromString('2015-03-15 13:43:21');
+		$this->assertEquals('2015-03-01T00:00:00-07:00', $this->date->getStartOfMonth());
 	}
 
-	public function testGetLastDayOfMonth() {
-		$this->date->setDateFromString('2015-04-15 13:43:21');
-		$this->assertEquals('2015-04-30T00:00:00-07:00', $this->date->getLastDayOfMonth());
+	public function testGetEndOfMonth() {
+		$this->date->setDateTimeFromString('2015-04-15 13:43:21');
+		$this->assertEquals('2015-04-30T00:00:00-07:00', $this->date->getEndOfMonth());
 
-		$this->date->setDateFromString('2015-03-15 13:43:21');
-		$this->assertEquals('2015-03-31T00:00:00-07:00', $this->date->getLastDayOfMonth());
+		$this->date->setDateTimeFromString('2015-03-15 13:43:21');
+		$this->assertEquals('2015-03-31T00:00:00-07:00', $this->date->getEndOfMonth());
 	}
 
 	public function testSetFirstMonthOfFirstQuarter() {
@@ -94,19 +94,19 @@ class DateTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals(12, $quarters[3]);
 	}
 
-	public function testGetFirstDayOfQuarter() {
-		$this->date->setDateFromString('2015-04-15 13:43:21');
-		$this->assertEquals('2015-04-01T00:00:00-07:00', $this->date->getFirstDayOfQuarter());
+	public function testGetStartOfQuarter() {
+		$this->date->setDateTimeFromString('2015-04-15 13:43:21');
+		$this->assertEquals('2015-04-01T00:00:00-07:00', $this->date->getStartOfQuarter());
 
-		$this->date->setDateFromString('2015-03-15 13:43:21');
-		$this->assertEquals('2015-01-01T00:00:00-07:00', $this->date->getFirstDayOfQuarter());
+		$this->date->setDateTimeFromString('2015-03-15 13:43:21');
+		$this->assertEquals('2015-01-01T00:00:00-07:00', $this->date->getStartOfQuarter());
 	}
 
-	public function testGetLastDayOfQuarter() {
-		$this->date->setDateFromString('2015-04-15 13:43:21');
-		$this->assertEquals('2015-06-30T23:59:59-07:00', $this->date->getLastDayOfQuarter());
+	public function testGetEndOfQuarter() {
+		$this->date->setDateTimeFromString('2015-04-15 13:43:21');
+		$this->assertEquals('2015-06-30T23:59:59-07:00', $this->date->getEndOfQuarter());
 
-		$this->date->setDateFromString('2015-03-15 13:43:21');
-		$this->assertEquals('2015-03-31T23:59:59-07:00', $this->date->getLastDayOfQuarter());
+		$this->date->setDateTimeFromString('2015-03-15 13:43:21');
+		$this->assertEquals('2015-03-31T23:59:59-07:00', $this->date->getEndOfQuarter());
 	}
 }
