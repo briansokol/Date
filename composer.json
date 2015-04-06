@@ -1,0 +1,27 @@
+{
+  "name": "briansokol/Date",
+  "description": "Class for doing fancy stuff with dates",
+  "type": "library",
+  "keywords": ["Date"],
+  "license": "MIT",
+  "homepage": "https://github.com/briansokol/Date",
+  "authors": [
+    {
+      "name": "Brian Sokol",
+      "email": "bri@nsokol.net",
+      "homepage": "http://briansokol.net",
+      "role": "Developer"
+    }
+  ],
+  "require": {
+    "php": ">=5.3.0"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "4.5.*"
+  },
+  "autoload": {
+    "psr-0": {
+      "briansokol\\Date": "src/"
+    }
+  }
+}
