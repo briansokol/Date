@@ -205,13 +205,74 @@ class Date {
 		}
 
 		$firstMonth = $this->calculateFirstMonthOfQuarter();
+		$thisYear = $this->date->format('Y');
 
 		$firstDate = new \DateTime(
-			$this->date->format("Y-".str_pad($firstMonth, 2, "0", STR_PAD_LEFT)."-01 00:00:00"),
+			$this->date->format($thisYear."-".str_pad($firstMonth, 2, "0", STR_PAD_LEFT)."-01 00:00:00"),
 			$this->date->getTimezone()
 		);
 
 		return $firstDate->format($format);
+	}
+
+	/**
+	 * Returns the start of the next quarter.
+	 * If no format is provided, the default format will be used.
+	 * See {@link http://php.net/manual/en/function.date.php} for format options.
+	 *
+	 * @param null $format
+	 * @return string
+	 */
+	public function getStartOfNextQuarter($format = null) {
+		if (empty($format)) {
+			$format = $this->format;
+		}
+
+		$firstMonth = $this->calculateFirstMonthOfQuarter();
+		$thisYear = $this->date->format('Y');
+
+		$index = array_search($firstMonth, $this->quarters);
+		if (++$index == 4) {
+			$index = 0;
+			$thisYear++;
+		}
+
+		$nextDate = new \DateTime(
+			$this->date->format($thisYear."-".str_pad($this->quarters[$index], 2, "0", STR_PAD_LEFT)."-01 00:00:00"),
+			$this->date->getTimezone()
+		);
+
+		return $nextDate->format($format);
+	}
+
+	/**
+	 * Returns the start of the last quarter.
+	 * If no format is provided, the default format will be used.
+	 * See {@link http://php.net/manual/en/function.date.php} for format options.
+	 *
+	 * @param null $format
+	 * @return string
+	 */
+	public function getStartOfLastQuarter($format = null) {
+		if (empty($format)) {
+			$format = $this->format;
+		}
+
+		$firstMonth = $this->calculateFirstMonthOfQuarter();
+		$thisYear = $this->date->format('Y');
+
+		$index = array_search($firstMonth, $this->quarters);
+		if (--$index == -1) {
+			$index = 3;
+			$thisYear--;
+		}
+
+		$nextDate = new \DateTime(
+			$this->date->format($thisYear."-".str_pad($this->quarters[$index], 2, "0", STR_PAD_LEFT)."-01 00:00:00"),
+			$this->date->getTimezone()
+		);
+
+		return $nextDate->format($format);
 	}
 
 	/**
@@ -228,13 +289,78 @@ class Date {
 		}
 
 		$firstMonth = $this->calculateFirstMonthOfQuarter();
+		$thisYear = $this->date->format('Y');
 
 		$index = array_search($firstMonth, $this->quarters);
-		if (++$index == 4)
+		if (++$index == 4) {
 			$index = 0;
+			$thisYear++;
+		}
 
 		$lastDate = new \DateTime(
-			$this->date->format("Y-".str_pad($this->quarters[$index], 2, "0", STR_PAD_LEFT)."-01 23:59:59"),
+			$this->date->format($thisYear."-".str_pad($this->quarters[$index], 2, "0", STR_PAD_LEFT)."-01 23:59:59"),
+			$this->date->getTimezone()
+		);
+		$lastDate->sub(new \DateInterval('P1D'));
+
+		return $lastDate->format($format);
+	}
+
+	/**
+ * Returns the end of the next quarter.
+ * If no format is provided, the default format will be used.
+ * See {@link http://php.net/manual/en/function.date.php} for format options.
+ *
+ * @param null $format
+ * @return string
+ */
+	public function getEndOfNextQuarter($format = null) {
+		if (empty($format)) {
+			$format = $this->format;
+		}
+
+		$firstMonth = $this->calculateFirstMonthOfQuarter();
+		$thisYear = $this->date->format('Y');
+
+		$index = array_search($firstMonth, $this->quarters);
+		if (++$index == 4) {
+			$index = 0;
+			$thisYear++;
+		}
+		if (++$index == 4) {
+			$index = 0;
+			$thisYear++;
+		}
+
+		$lastDate = new \DateTime(
+			$this->date->format($thisYear."-".str_pad($this->quarters[$index], 2, "0", STR_PAD_LEFT)."-01 23:59:59"),
+			$this->date->getTimezone()
+		);
+		$lastDate->sub(new \DateInterval('P1D'));
+
+		return $lastDate->format($format);
+	}
+
+	/**
+	 * Returns the end of the last quarter.
+	 * If no format is provided, the default format will be used.
+	 * See {@link http://php.net/manual/en/function.date.php} for format options.
+	 *
+	 * @param null $format
+	 * @return string
+	 */
+	public function getEndOfLastQuarter($format = null) {
+		if (empty($format)) {
+			$format = $this->format;
+		}
+
+		$firstMonth = $this->calculateFirstMonthOfQuarter();
+		$thisYear = $this->date->format('Y');
+
+		$index = array_search($firstMonth, $this->quarters);
+
+		$lastDate = new \DateTime(
+			$this->date->format($thisYear."-".str_pad($this->quarters[$index], 2, "0", STR_PAD_LEFT)."-01 23:59:59"),
 			$this->date->getTimezone()
 		);
 		$lastDate->sub(new \DateInterval('P1D'));

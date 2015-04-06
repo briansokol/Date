@@ -102,11 +102,43 @@ class DateTest extends PHPUnit_Framework_TestCase {
 		$this->assertEquals('2015-01-01T00:00:00-07:00', $this->date->getStartOfQuarter());
 	}
 
+	public function testGetStartOfNextQuarter() {
+		$this->date->setDateTimeFromString('2015-04-15 13:43:21');
+		$this->assertEquals('2015-07-01T00:00:00-07:00', $this->date->getStartOfNextQuarter());
+
+		$this->date->setDateTimeFromString('2015-03-15 13:43:21');
+		$this->assertEquals('2015-04-01T00:00:00-07:00', $this->date->getStartOfNextQuarter());
+	}
+
+	public function testGetStartOfLastQuarter() {
+		$this->date->setDateTimeFromString('2015-04-15 13:43:21');
+		$this->assertEquals('2015-01-01T00:00:00-07:00', $this->date->getStartOfLastQuarter());
+
+		$this->date->setDateTimeFromString('2015-03-15 13:43:21');
+		$this->assertEquals('2014-10-01T00:00:00-07:00', $this->date->getStartOfLastQuarter());
+	}
+
 	public function testGetEndOfQuarter() {
 		$this->date->setDateTimeFromString('2015-04-15 13:43:21');
 		$this->assertEquals('2015-06-30T23:59:59-07:00', $this->date->getEndOfQuarter());
 
 		$this->date->setDateTimeFromString('2015-03-15 13:43:21');
 		$this->assertEquals('2015-03-31T23:59:59-07:00', $this->date->getEndOfQuarter());
+	}
+
+	public function testGetEndOfNextQuarter() {
+		$this->date->setDateTimeFromString('2015-04-15 13:43:21');
+		$this->assertEquals('2015-09-30T23:59:59-07:00', $this->date->getEndOfNextQuarter());
+
+		$this->date->setDateTimeFromString('2015-03-15 13:43:21');
+		$this->assertEquals('2015-06-30T23:59:59-07:00', $this->date->getEndOfNextQuarter());
+	}
+
+	public function testGetEndOfLastQuarter() {
+		$this->date->setDateTimeFromString('2015-04-15 13:43:21');
+		$this->assertEquals('2015-03-31T23:59:59-07:00', $this->date->getEndOfLastQuarter());
+
+		$this->date->setDateTimeFromString('2015-03-15 13:43:21');
+		$this->assertEquals('2014-12-31T23:59:59-07:00', $this->date->getEndOfLastQuarter());
 	}
 }
