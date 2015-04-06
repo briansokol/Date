@@ -100,6 +100,10 @@ class DateTest extends PHPUnit_Framework_TestCase {
 
 		$this->date->setDateTimeFromString('2015-03-15 13:43:21');
 		$this->assertEquals('2015-01-01T00:00:00-07:00', $this->date->getStartOfQuarter());
+
+		$this->date->setFirstMonthOfFirstQuarter(2);
+		$this->date->setDateTimeFromString('2015-01-15 13:43:21');
+		$this->assertEquals('2014-11-01T00:00:00-07:00', $this->date->getStartOfQuarter());
 	}
 
 	public function testGetStartOfNextQuarter() {
@@ -108,6 +112,10 @@ class DateTest extends PHPUnit_Framework_TestCase {
 
 		$this->date->setDateTimeFromString('2015-03-15 13:43:21');
 		$this->assertEquals('2015-04-01T00:00:00-07:00', $this->date->getStartOfNextQuarter());
+
+		$this->date->setFirstMonthOfFirstQuarter(2);
+		$this->date->setDateTimeFromString('2015-12-15 13:43:21');
+		$this->assertEquals('2016-02-01T00:00:00-07:00', $this->date->getStartOfNextQuarter());
 	}
 
 	public function testGetStartOfLastQuarter() {
@@ -116,6 +124,10 @@ class DateTest extends PHPUnit_Framework_TestCase {
 
 		$this->date->setDateTimeFromString('2015-03-15 13:43:21');
 		$this->assertEquals('2014-10-01T00:00:00-07:00', $this->date->getStartOfLastQuarter());
+
+		$this->date->setFirstMonthOfFirstQuarter(2);
+		$this->date->setDateTimeFromString('2015-01-15 13:43:21');
+		$this->assertEquals('2014-08-01T00:00:00-07:00', $this->date->getStartOfLastQuarter());
 	}
 
 	public function testGetEndOfQuarter() {

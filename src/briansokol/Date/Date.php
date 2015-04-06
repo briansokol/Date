@@ -20,6 +20,11 @@ class Date {
 	protected $date;
 
 	/**
+	 * @var \DateTimezone
+	 */
+	protected $timezone;
+
+	/**
 	 * @var string
 	 */
 	protected $format;
@@ -41,6 +46,7 @@ class Date {
 	function __construct() {
 		$this->date = new \DateTime();
 		$this->format = "c";
+		$this->timezone = null;
 		$this->firstMonthOfFirstQuarter = 1;
 		$this->calculateQuarters();
 	}
@@ -67,6 +73,9 @@ class Date {
 	 * @return \briansokol\Date\Date $this
 	 */
 	public function setDateTimeFromString($date, $timezone = null) {
+		if (empty($timezone)) {
+			$timezone = $this->timezone;
+		}
 		$this->date = new \DateTime($date, $timezone);
 		return $this;
 	}
@@ -107,6 +116,7 @@ class Date {
 	 */
 	public function setTimezone($timezone) {
 		$this->date->setTimezone($timezone);
+		$this->timezone = $timezone;
 		return $this;
 	}
 
@@ -206,6 +216,9 @@ class Date {
 
 		$firstMonth = $this->calculateFirstMonthOfQuarter();
 		$thisYear = $this->date->format('Y');
+		if ($firstMonth > $this->date->format('n')) {
+			$thisYear--;
+		}
 
 		$firstDate = new \DateTime(
 			$this->date->format($thisYear."-".str_pad($firstMonth, 2, "0", STR_PAD_LEFT)."-01 00:00:00"),
@@ -260,6 +273,9 @@ class Date {
 
 		$firstMonth = $this->calculateFirstMonthOfQuarter();
 		$thisYear = $this->date->format('Y');
+		if ($firstMonth > $this->date->format('n')) {
+			$thisYear--;
+		}
 
 		$index = array_search($firstMonth, $this->quarters);
 		if (--$index == -1) {
@@ -392,6 +408,9 @@ class Date {
 				break;
 			}
 		}
+		if ($currentStart == 0) {
+			$currentStart = $this->quarters[3];
+		}
 		return $currentStart;
 	}
 
@@ -412,6 +431,8 @@ class Date {
 	}
 
 	/**
+	 * Gets an instance of a Date object
+	 *
 	 * @return static
 	 */
 	static public function getInstance() {
