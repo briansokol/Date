@@ -18,42 +18,46 @@ class DateTest extends PHPUnit_Framework_TestCase {
 	}
 
 	public function testSetDateTime() {
-		$this->date->setDate('2015', '04', '01');
-		$this->assertEquals('2015-04-01', $this->date->getDate('Y-m-d'));
+	$this->date->setDate('2015', '04', '01');
+	$this->assertEquals('2015-04-01', $this->date->format('Y-m-d'));
 
-		$this->date->setTime('13', '43', '21');
-		$this->assertEquals('13:43:21', $this->date->getDate('H:i:s'));
+	$this->date->setTime('13', '43', '21');
+	$this->assertEquals('13:43:21', $this->date->format('H:i:s'));
 
-		$this->assertEquals('2015-04-01T13:43:21-07:00', $this->date->getDate());
-	}
+	$this->assertEquals('2015-04-01T13:43:21-07:00', $this->date->format());
+}
 
 	public function testSetDateTimeFromString() {
 		$this->date->setDateTimeFromString('2015-04-01 13:43:21');
-		$this->assertEquals('2015-04-01T13:43:21-07:00', $this->date->getDate());
+		$this->assertEquals('2015-04-01T13:43:21-07:00', $this->date->format());
 	}
 
 	public function testSetDateTimeFromStringWithTimezone() {
 		$timezone = new \DateTimeZone('Pacific/Honolulu');
 		$this->date->setDateTimeFromString('2015-04-01 13:43:21', $timezone);
-		$this->assertEquals('2015-04-01T13:43:21-10:00', $this->date->getDate());
+		$this->assertEquals('2015-04-01T13:43:21-10:00', $this->date->format());
 	}
 
 	public function testSetTimestamp() {
 		$this->date->setTimestamp(1427921001);
-		$this->assertEquals('2015-04-01T13:43:21-07:00', $this->date->getDate());
+		$this->assertEquals('2015-04-01T13:43:21-07:00', $this->date->format());
 	}
 
 	public function testSetTimezone() {
 		$timezone = new \DateTimeZone('Pacific/Honolulu');
 		$this->date->setDateTimeFromString('2015-04-01 13:43:21');
 		$this->date->setTimezone($timezone);
-		$this->assertEquals('2015-04-01T10:43:21-10:00', $this->date->getDate());
+		$this->assertEquals('2015-04-01T10:43:21-10:00', $this->date->format());
 	}
 
 	public function testSetFormat() {
 		$this->date->setDateTimeFromString('2015-04-01 13:43:21');
 		$this->date->setFormat('Y-m-d H:i:s');
-		$this->assertEquals('2015-04-01 13:43:21', $this->date->getDate());
+		$this->assertEquals('2015-04-01 13:43:21', $this->date->format());
+	}
+
+	public function setGetDate() {
+		$this->assertEquals('\DateTime', get_class($this->date->getDate()));
 	}
 
 	public function testGetStartOfMonth() {
