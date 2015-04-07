@@ -2,8 +2,6 @@
 
 namespace briansokol\Date;
 
-use briansokol\Date\Exception\QuarterStartException;
-
 /**
  * Class Date
  * @package briansokol\Date
@@ -139,14 +137,14 @@ class Date {
 	 *
 	 * @param int $month The month number of the first month of the quarter.
 	 * @return \briansokol\Date\Date $this
-	 * @throws QuarterStartException if the provided month is out of range.
+	 * @throws \briansokol\Date\Exception\QuarterStartException if the provided month is out of range.
 	 */
 	public function setFirstMonthOfFirstQuarter($month) {
 		if (!is_integer($month)) {
-			throw new QuarterStartException("Month must be an integer.");
+			throw new Exception\QuarterStartException("Month must be an integer.");
 		}
 		if ($month > 12 || $month < 1) {
-			throw new QuarterStartException("Month must be between 1 and 12");
+			throw new Exception\QuarterStartException("Month must be between 1 and 12");
 		}
 		$this->firstMonthOfFirstQuarter = (int)$month;
 		$this->calculateQuarters();
@@ -162,11 +160,20 @@ class Date {
 	 * @param string|null $format
 	 * @return string
 	 */
-	public function getDate($format = null) {
+	public function format($format = null) {
 		if (empty($format)) {
 			$format = $this->format;
 		}
 		return $this->date->format($format);
+	}
+
+	/**
+	 * Returns the underlying \DateTime object.
+	 *
+	 * @return \DateTime
+	 */
+	public function getDate() {
+		return $this->date;
 	}
 
 	/**
@@ -431,7 +438,7 @@ class Date {
 	}
 
 	/**
-	 * Gets an instance of a Date object
+	 * Gets an instance of a \briansokol\Date\Date object
 	 *
 	 * @return static
 	 */
